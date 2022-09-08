@@ -12,38 +12,17 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Azure
-#region  = "West US 2"
-#zone    = 1
+data "cloudinit_config" "ubuntu2004" {
+  gzip          = true
+  base64_encode = true
 
-# GCP
-#region  = "us-west1"
-#zone    = "us-west1-a"
-
-# AWS
-#region  = "us-west-2"
-#zone    = "us-west-2a"
-
-# OCI
-#region   = "ap-melbourne-1"
-
-ssh = {
-  user         = "nvidia"
-  privkey      = "../../ssh/id_rsa"
-  pubkey       = "../../ssh/id_rsa.pub"
-  privkey_host = "../../ssh/host_ed25519"
-  pubkey_host  = "../../ssh/host_ed25519.pub"
-  known_hosts  = "../../ssh/known_hosts"
-  config       = "../../ssh/config"
-}
-
-ansible = {
-  inventory      = "../../ansible/inventory"
-}
-
-replicas = {
-  x4v100 = 0
-  x8v100 = 0
-  x8a100_40g = 0
-  x8a100_80g = 0
+  part {
+    content_type = "text/cloud-config"
+    content      = templatefile("${path.root}/../config/ubuntu.yml", {
+      ssh_user         = var.ssh.user
+      ssh_pubkey       = jsonencode(file(var.ssh.pubkey))
+      ssh_privkey_host = jsonencode(file(var.ssh.privkey_host))
+      ssh_pubkey_host  = jsonencode(file(var.ssh.pubkey_host))
+    })
+  }
 }
