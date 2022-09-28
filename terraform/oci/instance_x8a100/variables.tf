@@ -12,37 +12,17 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Azure
-#region  = "West US 2"
-#zone    = 1
-
-# GCP
-#region  = "us-west1"
-#zone    = "us-west1-a"
-
-# AWS
-#region  = "us-west-2"
-#zone    = "us-west-2a"
-
-# OCI
-#region   = "ap-melbourne-1"
-
-ssh = {
-  user         = "nvidia"
-  privkey      = "../../ssh/id_rsa"
-  pubkey       = "../../ssh/id_rsa.pub"
-  privkey_host = "../../ssh/host_ed25519"
-  pubkey_host  = "../../ssh/host_ed25519.pub"
-  known_hosts  = "../../ssh/known_hosts"
-  config       = "../../ssh/config"
-}
-
-ansible = {
-  inventory      = "../../ansible/inventory"
-}
-
-replicas = {
-  x4v100 = 0
-  x8v100 = 0
-  x8a100 = 0
-}
+variable "compartment_ocid" {}
+variable "replicas" {}
+variable "type" {}
+variable "public" {}
+variable "name" {}
+variable "cluster_id" {}
+variable "preemptible" {}
+variable "ssh" {}
+variable "config" {}
+variable "subnet" {}
+variable "os_image" {}
+variable "os_disk_size" {}
+variable "custom_tags" {}
+variable "availability_domain" {}
